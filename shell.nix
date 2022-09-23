@@ -18,5 +18,6 @@ pkgs.mkShell {
   buildInputs = [
     pythonPackages
     texPackages
+    pkgs.imagemagick
   ];
 }

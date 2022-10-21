@@ -1,5 +1,8 @@
 import re
 import numpy as np
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+import pandas as pd
 
 def task1():
     x = int(input())
@@ -39,7 +42,7 @@ def task7():
     return (matrix, minor)
 
 # def task8(f, min_x, max_x, N, min_y, max_y):
-#     # TODO: ...
+#     plot = plt.subplot()
 
 # def task9(data, x_array, y_array, threshold):
 #     # TODO: ...
@@ -50,5 +53,14 @@ def task7():
 # def task11(filename="infile.csv"):
 #     # TODO: ...
 
-# def task12(filename="video-games.csv"):
-#     # TODO: ...
+def task12(filename="video-games.csv"):
+    data = pd.read_csv(filename)
+    return dict(
+        n_games = len(data),
+        by_years = data.groupby(['year']).agg(games_per_year=('title', len)),
+        mean_price = data.groupby(['publisher']).agg(mean_price=('price', 'mean')),
+        age_max_price = data.loc[data.groupby(['age_raiting'])['price'].transform(max) == data['price']],
+        mean_raiting_1_2 = data.groupby(['max_players']).agg({'review_raiting': 'mean'})
+    )
+
+print(task12()['mean_raiting_1_2'])
